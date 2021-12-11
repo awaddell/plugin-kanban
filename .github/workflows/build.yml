@@ -1,0 +1,25 @@
+name: NodeJS
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    # using npm install for now but npm ci preferred but means committing package-lock.json
+    - name: Build
+      run: |
+        npm install
+        npm run dist
